@@ -1,9 +1,12 @@
 package com.example.application.views.home;
 
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
@@ -15,19 +18,19 @@ public class HomeView extends VerticalLayout {
     public HomeView() {
         setSpacing(false);
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
+        Select<String> select = new Select<>();
+        select.setItems("Option one", "Option two", "Option three");
 
-        H2 header = new H2("This place intentionally left empty");
-        header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
-        add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setItems("Option one", "Option two", "Option three");
 
-        setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        getStyle().set("text-align", "center");
+        Button refreshButton = new Button("Refresh items");
+        refreshButton.addClickListener(e -> {
+            select.getDataProvider().refreshAll();
+            comboBox.getDataProvider().refreshAll();
+        });
+
+        add(select, comboBox, refreshButton);
     }
 
 }
